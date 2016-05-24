@@ -3,11 +3,20 @@ body {
 	padding-top: 50px;
 	background: url('small_steps.png');
 	overflow-x:hidden;
+
 }
-
-.container-fluid
+html, body
 {
-
+	height: 100%;
+}
+.left-zone
+{
+	background: #FFF;
+	height: auto;
+	height: 95vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+	/*white-space: nowrap;*/
 }
 .bloc .list-group-item
 {
