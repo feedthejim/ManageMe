@@ -1,0 +1,18 @@
+/* CSS declarations go here */
+body {
+	padding-top: 50px;
+	background: url('small_steps.png');
+	overflow-x:hidden;
+}
+
+.container-fluid
+{
+
+}
+.bloc .list-group-item
+{
+	padding-top: 40px;
+	margin-top: 10px;
+	border: 1px solid #337ab7;
+	//background: #337ab7;
+}

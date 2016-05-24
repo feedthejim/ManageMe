@@ -1,0 +1,110 @@
+	
+<body >
+	<div id="mainBody">
+
+		<div class="container-fluid">
+			{{>addColumnModal}}
+			<div class="row row-horizon">
+				{{>column}}
+				
+			</div>
+		</div>
+	</div>
+	{{>autoformModals}}
+</body>
+
+<template name="column">
+	{{#each columns}}
+	<div class="col-sm-3">
+		<div class="list-group bloc undraggable" id={{columnId}}>
+			<a href="#" class="list-group-item active undraggable" style="background-color:{{backgroundColor}}; color:{{fontColor}};">
+				<h2 class="list-group-item-heading undraggable"> 
+					{{>addNotesModal colId=columnId}}
+					{{>editColumnModal id=_id}}
+					{{>removeColumnModal id=_id}}
+					<center>{{description}}</center>
+				</h2>
+				<p class="list-group-item-text">{{details}} id:{{columnId}} //to remove
+				</p>
+			</a>
+			{{>postit col=columnId}}
+		</div>
+	</div>
+	{{/each}}
+</template>
+
+<template name="addColumnModal">
+	
+	{{#afModal title="Ajouter une colonne" 
+	placeholder=true backdrop=true class="btn btn-primary pull-left" collection="columns" formId="addColumns" operation="insert" value=defaultValues}}
+	<span class="
+	glyphicon glyphicon-plus" 
+	></span>
+	{{/afModal}}
+
+</template>
+
+<template name="addNotesModal">
+		{{#afModal title="Ajouter une note" 
+		placeholder=true backdrop=true class="btn btn-primary pull-right" formId="addNotes" collection="posts" operation="insert"}}
+		<span class="
+		glyphicon glyphicon-plus" 
+		></span>
+		{{/afModal}}
+
+</template>
+
+
+<template name="postit">
+	<div class="bloc" id={{[col]}}>
+		{{#each (posts col)}}
+		<a href="#" class="list-group-item" id={{_id}} style="background-color:{{backgroundColor}}; color:{{fontColor}};">
+			<h4 class="list-group-item-heading">{{description}}
+				{{>editPostModal id=_id}}
+				{{>removePostModal id=_id}}
+			</h4>
+			<p class="list-group-item-text">
+				<h4>{{details}}
+					{{#each tag in tags}}
+					<span class="label label-default">{{tag}}</span>
+					{{/each}}
+				</h4>
+			</p>
+
+		</a>
+		{{/each}}
+	</div>
+</template>
+
+<template name="removePostModal">
+	{{#afModal title="Supprimer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="posts" operation="remove" doc=id}}
+	<span class="
+	glyphicon glyphicon-remove" 
+	></span>
+	{{/afModal}}
+
+</template>
+<template name = "editPostModal">
+	{{#afModal title="Editer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="posts" operation="update" doc=id}}
+	<span class="
+	glyphicon glyphicon-pencil" 
+	></span>
+	{{/afModal}}
+</template>
+
+<template name="removeColumnModal">
+	{{#afModal title="Supprimer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="columns" operation="remove" doc=id}}
+	<span class="
+	glyphicon glyphicon-remove" 
+	></span>
+	{{/afModal}}
+
+</template>
+<template name = "editColumnModal">
+	{{#afModal title="Editer la colonne" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="columns" operation="update" doc=id}}
+	<span class="
+	glyphicon glyphicon-pencil" 
+	></span>
+	{{/afModal}}
+</template>
+

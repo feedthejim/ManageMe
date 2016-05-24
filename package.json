@@ -1,0 +1,13 @@
+{
+  "name": "ManageMe",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "bootstrap-horizon": "^0.1.0",
+    "dom-autoscroller": "^1.2.4",
+    "dragula": "^3.7.0",
+    "meteor-node-stubs": "~0.2.0"
+  }
+}
