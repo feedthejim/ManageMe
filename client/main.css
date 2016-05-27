@@ -11,6 +11,7 @@ html, body
 }
 .left-zone
 {
+	border-radius: 25px;
 	background: #FFF;
 	height: auto;
 	height: 95vh;
