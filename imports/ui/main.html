@@ -4,7 +4,9 @@
 
 		<div class="container-fluid">
 			{{>timeline}}
+			{{#if currentUser}}
 			{{>addColumnModal}}
+			{{/if}}
 			<div class="row row-horizon">
 
 
@@ -23,12 +25,17 @@
 		<div class="list-group bloc undraggable" id={{columnId}}>
 			<a href="#" class="list-group-item active undraggable" style="background-color:{{backgroundColor}}; color:{{fontColor}};">
 				<h2 class="list-group-item-heading undraggable"> 
+					{{#if currentUser}}
 					{{>addNotesModal colId=columnId}}
+					{{/if}}
+					{{#if equals currentUser._id createdBy}}
+					
 					{{>editColumnModal id=_id}}
 					{{>removeColumnModal id=_id}}
-					<center>{{description}}</center>
+					{{/if}}
+					<center style="color:{{fontColor}};">{{description}}</center>
 				</h2>
-				<p class="list-group-item-text">{{details}} id:{{columnId}} //to remove
+				<p class="list-group-item-text" style="color:{{fontColor}};">{{details}} id:{{columnId}} //to remove
 				</p>
 			</a>
 			{{>postit col=columnId}}
@@ -158,22 +165,30 @@
 <template name="postit">
 	<div class="bloc" id={{[col]}}>
 		{{#each (posts col)}}
-		<a href="#" class="list-group-item" id={{_id}} style="background-color:{{backgroundColor}}; color:{{fontColor}};">
-			<h4 class="list-group-item-heading">{{description}}
-				{{>editPostModal id=_id}}
-				{{>removePostModal id=_id}}
+		<a href="#" class="list-group-item" id={{_id}} style="
+		{{#if not isColor backgroundColor}}
+		background: {{backgroundColor}};
+		color: "#000";
+		{{else}} background-color:{{backgroundColor}};
+		color:{{fontColor}};{{/if}}">
+		<h4 class="list-group-item-heading" style="color:{{fontColor}};">{{description}}
+			{{#if equals currentUser._id createdBy}}
+			{{>editPostModal id=_id}}
+			{{>removePostModal id=_id}}
+			{{/if}}
+		</h4>
+		<p class="list-group-item-text">
+			<h4>
+				<div style="color:{{fontColor}};">{{details}}</div>
+				{{#each tag in tags}}
+				<span class="label label-default">{{tag}}</span>
+				{{/each}}
 			</h4>
-			<p class="list-group-item-text">
-				<h4>{{details}}
-					{{#each tag in tags}}
-					<span class="label label-default">{{tag}}</span>
-					{{/each}}
-				</h4>
-			</p>
+		</p>
 
-		</a>
-		{{/each}}
-	</div>
+	</a>
+	{{/each}}
+</div>
 </template>
 
 <template name="removePostModal">
