@@ -7,23 +7,23 @@ window.posts = Posts; //TODO find workaround to linking col and schema
 window.columns = Columns;
 
 Template.registerHelper('equals',
-    function(v1, v2) {
-        return (v1 === v2);
-    }
-);
+	function(v1, v2) {
+		return (v1 === v2);
+	}
+	);
 
 Template.registerHelper('not',
-    function(v1, v2) {
-    	switch(v1)
-    	{
-    		case 'isColor':
-    			console.log("checking v2")
-    			return (v2.indexOf(v1) === -1);
-    		default:
-    		    return true;
-     	}
-    }
-);
+	function(v1, v2) {
+		switch(v1)
+		{
+			case 'isColor':
+			console.log("checking v2")
+			return (v2.indexOf(v1) === -1);
+			default:
+			return true;
+		}
+	}
+	);
 
 Template.postit.helpers({
 	posts(col) {
@@ -60,7 +60,8 @@ dragulaWatcher = setInterval(function(){
 	});
 
 	drake.on('drop', dropListener);
-}, 500);	
+}, 500);
+
 });
 
 

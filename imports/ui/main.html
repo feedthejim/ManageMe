@@ -1,21 +1,28 @@
 	
 <body >
+
 	<div id="mainBody">
 
 		<div class="container-fluid">
-			{{>timeline}}
 			{{#if currentUser}}
 			{{>addColumnModal}}
 			{{/if}}
 			<div class="row row-horizon">
-
-
-
 				{{>column}}
-				
 			</div>
 		</div>
 	</div>
+
+	<footer id="chart" class="footer">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="col-md-6"> hello</div>
+			</div>
+			<div class="row-fluid">
+				<div class="col-md-6"> hello</div>
+			</div>
+		</div>
+	</footer>
 	{{>autoformModals}}
 </body>
 
