@@ -1,7 +1,8 @@
 .row-horizon {
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow-x: auto;
+  overflow-y: auto;
   white-space: nowrap;
+  height: 800px;
 }
 .row-horizon > [class*="col-lg"], .row-horizon > [class*="col-md"], .row-horizon > [class*="col-sm"], .row-horizon > [class*="col-xs"] {
   float: none;

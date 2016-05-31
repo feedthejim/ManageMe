@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Posts } from '../api/Posts.js';
 import { Columns } from '../api/Columns.js';
+import { Tracker } from 'meteor/tracker';
 import './main.html';
 
 window.posts = Posts; //TODO find workaround to linking col and schema
@@ -61,7 +62,20 @@ dragulaWatcher = setInterval(function(){
 
 	drake.on('drop', dropListener);
 }, 500);
+Tracker.autorun(function (){
+	var testData = [
+	{label: "person a", times: [{"color":"green", "label":"Weeee", "starting_time": 1355752800000, "ending_time": 1355759900000}, {"color":"blue", "label":"Weeee", "starting_time": 1355767900000, "ending_time": 1355774400000}]},
+	{label: "person b", times: [{"color":"pink", "label":"Weeee", "starting_time": 1355759910000, "ending_time": 1355761900000}, ]},
+	{label: "person b", times: [{"color":"pink", "label":"Weeee", "starting_time": 1355759910000, "ending_time": 1355761900000}, ]},
+	{label: "person b", times: [{"color":"pink", "label":"Weeee", "starting_time": 1355759910000, "ending_time": 1355761900000}, ]},
+	{label: "person c", times: [{"color":"yellow", "label":"Weeee", "starting_time": 1355761910000, "ending_time": 1355763910000}]}
+	];
 
+	var chart = d3.timeline().stack().margin({left:70, right:30, top:0, bottom:0});
+
+	var svg = d3.select("#timeline").append("svg").attr("width", 1950)
+	.datum(testData).call(chart);
+})
 });
 
 

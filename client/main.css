@@ -2,7 +2,7 @@
 body {
 	padding-top: 50px;
 	background: url('small_steps.png');
-	overflow-x:hidden;
+	overflow-x:auto;
 
 }
 html, body
@@ -40,6 +40,16 @@ body {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 25em;
-  background-color: #f5f5f5;
+  height: 15.1em;
+}
+
+.nopadding {
+   padding-bottom: 0 !important;
+
+   margin: 0 !important;
+}
+
+.nomargin {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
 }
