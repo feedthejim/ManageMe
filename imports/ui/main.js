@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Posts } from '../api/Posts.js';
 import { Columns } from '../api/Columns.js';
+import { Events } from '../api/Events.js';
 import { Tracker } from 'meteor/tracker';
 import './main.html';
 
@@ -40,12 +41,21 @@ Template.column.helpers({
 
 });
 
+/*
+Template.footerCalendar.onRendered(function(){
+	this.autorun(function(){
+		if(!eventsReady.get()) {
+			return;
+		}
+		//placeholder afte publication
+	})
+})
+*/
 Template.body.onRendered(function(){
 // mauvais workaround
 var dragulaWatcher = null;
 
 dragulaWatcher = setInterval(function(){
-
 	if (typeof dragula != 'function') return;
 
 	clearInterval(dragulaWatcher);
@@ -60,22 +70,24 @@ dragulaWatcher = setInterval(function(){
 		console.log(drake.containers);
 	});
 
+	//temporary from here
+
+
 	drake.on('drop', dropListener);
-}, 500);
-Tracker.autorun(function (){
-	var testData = [
-	{label: "person a", times: [{"color":"green", "label":"Weeee", "starting_time": 1355752800000, "ending_time": 1355759900000}, {"color":"blue", "label":"Weeee", "starting_time": 1355767900000, "ending_time": 1355774400000}]},
-	{label: "person b", times: [{"color":"pink", "label":"Weeee", "starting_time": 1355759910000, "ending_time": 1355761900000}, ]},
-	{label: "person b", times: [{"color":"pink", "label":"Weeee", "starting_time": 1355759910000, "ending_time": 1355761900000}, ]},
-	{label: "person b", times: [{"color":"pink", "label":"Weeee", "starting_time": 1355759910000, "ending_time": 1355761900000}, ]},
-	{label: "person c", times: [{"color":"yellow", "label":"Weeee", "starting_time": 1355761910000, "ending_time": 1355763910000}]}
-	];
 
 	var chart = d3.timeline().stack().margin({left:70, right:30, top:0, bottom:0});
+	var testData = Events.find().fetch();
+	console.log(Events.find().fetch());
+	var svg = d3.select("#timeline").append("svg").attr("width", 1950).datum(testData).call(chart);
+	
+	Tracker.autorun(function (){
+		var testData = Events.find().fetch();
+		d3.select("svg").datum(testData).call(chart);
+	});
+	// to here
+}, 500);
 
-	var svg = d3.select("#timeline").append("svg").attr("width", 1950)
-	.datum(testData).call(chart);
-})
+
 });
 
 

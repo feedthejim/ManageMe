@@ -1,4 +1,4 @@
-// vim: ts=2 sw=2
+  // vim: ts=2 sw=2
 (function () {
   d3.timeline = function() {
     var DISPLAY_TYPES = ["circle", "rect"];
