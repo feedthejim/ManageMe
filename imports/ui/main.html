@@ -1,141 +1,173 @@
-	
+    
 <body >
-
-	<div id="mainBody">
-
-		<div class="container-fluid">
-			{{#if currentUser}}
-			{{>addColumnModal}}
-			{{/if}}
-			<div class="row row-horizon">
-				{{>column}}
-			</div>
-		</div>
-	</div>
-	<footer id="chart" class="footer">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="panel panel-primary nopadding">
-					<div class="panel-heading">
-						<h3 class="panel-title">Calendrier des Sprints</h3>
-					</div>
-					<div class="panel-body" id="timeline">
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-
-	{{>autoformModals}}
-	
+    {{>navbar}}
+    
+    {{>autoformModals}}
 </body>
 
+<template name="mainBoard">
+    <div id="mainBody">
+        <div class="container-fluid">
+            {{#if currentUser}}
+            {{>addColumnModal}}
+            {{/if}}
 
-<template name="column">
-	{{#each columns}}
-	<div class="col-sm-3">
-		<div class="list-group bloc undraggable" id={{columnId}}>
-			<a href="#" class="list-group-item active undraggable" style="background-color:{{backgroundColor}}; color:{{fontColor}};">
-				<h2 class="list-group-item-heading undraggable"> 
-					{{#if currentUser}}
-					{{>addNotesModal colId=columnId}}
-					{{/if}}
-					{{#if equals currentUser._id createdBy}}
-					
-					{{>editColumnModal id=_id}}
-					{{>removeColumnModal id=_id}}
-					{{/if}}
-					<center style="color:{{fontColor}};">{{description}}</center>
-				</h2>
-				<p class="list-group-item-text" style="color:{{fontColor}};">{{details}} id:{{columnId}} //to remove
-				</p>
-			</a>
-			{{>postit col=columnId}}
-		</div>
-	</div>
-	{{/each}}
+            {{>showRow id=_id}}
+        </div>
+    </div>
+    {{>footerCalendar}}
+</template>
+
+<template name="addProjectModal">
+
+    {{#afModal title="Ajouter un projet" 
+    placeholder=true backdrop=true class="btn btn-primary pull-left" collection="projects" formId="addProjects" operation="insert"}}
+    <span class="
+    glyphicon glyphicon-plus" 
+    ></span>
+    {{/afModal}}
+</template>
+
+<template name="showRow">
+    <div class="row row-horizon well">
+        {{>showColumn rowId=id}}
+    </div>
+</template>
+
+<template name="footerCalendar">
+    <footer id="chart" class="footer">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="panel panel-primary nopadding">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Calendrier des Sprints</h3>
+                    </div>
+                    <div class="panel-body" id="timeline">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</template>
+
+<template name="pleaseLogin">
+    <div class="jumbotron">
+        <div class="container">
+        <h1>Bienvenue sur ManageMe!</h1>
+            <p>Veuillez vous connectez pour découvrir les fonctionalités!</p>
+        </div>
+    </div>
+</template>
+
+<template name="showColumn">
+    {{#each (columns rowId)}}
+    <div class="col-sm-3">
+        <div class="well col">
+            <div class="list-group bloc undraggable" id={{columnId}}>
+                <a href="#" class="list-group-item active undraggable" style="background-color:{{backgroundColor}}; color:{{fontColor}};">
+                    <h2 class="list-group-item-heading undraggable"> 
+                        {{#if currentUser}}
+                        {{#if equals columnId 1}}
+                        {{>addNotesModal colId=columnId}}
+                        {{/if}}
+                        {{/if}}
+                        {{#if equals currentUser._id createdBy}}
+
+                        {{>editColumnModal id=_id}}
+                        {{>removeColumnModal id=_id}}
+                        {{/if}}
+                        <center style="color:{{fontColor}};">{{description}}</center>
+                    </h2>
+                    <p class="list-group-item-text" style="color:{{fontColor}};">{{details}} id:{{columnId}} //to remove
+                    </p>
+                </a>
+                {{>postit col=columnId row=../rowId}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
 </template>
 
 <template name="addColumnModal">
-	
-	{{#afModal title="Ajouter une colonne" 
-	placeholder=true backdrop=true class="btn btn-primary pull-left" collection="columns" formId="addColumns" operation="insert" value=defaultValues}}
-	<span class="
-	glyphicon glyphicon-plus" 
-	></span>
-	{{/afModal}}
+
+    {{#afModal title="Ajouter une colonne" 
+    placeholder=true backdrop=true class="btn btn-primary pull-left" collection="columns" formId="addColumns" operation="insert" value=defaultValues}}
+    <span class="
+    glyphicon glyphicon-plus" 
+    ></span>
+    {{/afModal}}
 
 </template>
 
 <template name="addNotesModal">
-	{{#afModal title="Ajouter une note" 
-	placeholder=true backdrop=true class="btn btn-primary pull-right" formId="addNotes" collection="posts" operation="insert"}}
-	<span class="
-	glyphicon glyphicon-plus" 
-	></span>
-	{{/afModal}}
+    {{#afModal title="Ajouter une note" 
+    placeholder=true backdrop=true class="btn btn-primary pull-right" formId="addNotes" collection="posts" operation="insert"}}
+    <span class="
+    glyphicon glyphicon-plus" 
+    ></span>
+    {{/afModal}}
 
 </template>
 
 
 <template name="postit">
-	<div class="bloc" id={{[col]}}>
-		{{#each (posts col)}}
-		<a href="#" class="list-group-item" id={{_id}} style="
-		{{#if not isColor backgroundColor}}
-		background: {{backgroundColor}};
-		color: "#000";
-		{{else}} background-color:{{backgroundColor}};
-		color:{{fontColor}};{{/if}}">
-		<h4 class="list-group-item-heading" style="color:{{fontColor}};">{{description}}
-			{{#if equals currentUser._id createdBy}}
-			{{>editPostModal id=_id}}
-			{{>removePostModal id=_id}}
-			{{/if}}
-		</h4>
-		<p class="list-group-item-text">
-			<h4>
-				<div style="color:{{fontColor}};">{{details}}</div>
-				{{#each tag in tags}}
-				<span class="label label-default">{{tag}}</span>
-				{{/each}}
-			</h4>
-		</p>
+    <div class="bloc" id={{[col]}}>
+        {{#each (posts col row)}}
+        <a href="#" class="list-group-item" id={{_id}} style="
+        {{#if not isColor backgroundColor}}
+        background: {{backgroundColor}};
+        color: "#000";
+        {{else}} background-color:{{backgroundColor}};
+        color:{{fontColor}};{{/if}}">
+        <h4 class="list-group-item-heading" style="color:{{fontColor}};">{{description}}
+            {{#if equals currentUser._id createdBy}}
+            {{>editPostModal id=_id}}
+            {{>removePostModal id=_id}}
+            {{/if}}
+        </h4>
+        <p class="list-group-item-text">
+            <h4>
+                <div style="color:{{fontColor}};">{{details}}</div>
+                {{#each tag in tags}}
+                <span class="label label-default">{{tag}}</span>
+                {{/each}}
+            </h4>
+        </p>
 
-	</a>
-	{{/each}}
+    </a>
+    {{/each}}
 </div>
 </template>
 
 <template name="removePostModal">
-	{{#afModal title="Supprimer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="posts" operation="remove" doc=id}}
-	<span class="
-	glyphicon glyphicon-remove" 
-	></span>
-	{{/afModal}}
+    {{#afModal title="Supprimer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="posts" operation="remove" doc=id}}
+    <span class="
+    glyphicon glyphicon-remove" 
+    ></span>
+    {{/afModal}}
 
 </template>
 <template name = "editPostModal">
-	{{#afModal title="Editer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="posts" operation="update" doc=id}}
-	<span class="
-	glyphicon glyphicon-pencil" 
-	></span>
-	{{/afModal}}
+    {{#afModal title="Editer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="posts" operation="update" doc=id}}
+    <span class="
+    glyphicon glyphicon-pencil" 
+    ></span>
+    {{/afModal}}
 </template>
 
 <template name="removeColumnModal">
-	{{#afModal title="Supprimer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="columns" operation="remove" doc=id}}
-	<span class="
-	glyphicon glyphicon-remove" 
-	></span>
-	{{/afModal}}
+    {{#afModal title="Supprimer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="columns" operation="remove" doc=id}}
+    <span class="
+    glyphicon glyphicon-remove" 
+    ></span>
+    {{/afModal}}
 
 </template>
 <template name = "editColumnModal">
-	{{#afModal title="Editer la colonne" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="columns" operation="update" doc=id}}
-	<span class="
-	glyphicon glyphicon-pencil" 
-	></span>
-	{{/afModal}}
+    {{#afModal title="Editer la colonne" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="columns" operation="update" doc=id}}
+    <span class="
+    glyphicon glyphicon-pencil" 
+    ></span>
+    {{/afModal}}
 </template>
 

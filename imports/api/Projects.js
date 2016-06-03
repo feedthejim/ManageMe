@@ -1,27 +1,17 @@
 import { Mongo } from 'meteor/mongo';
 
-export const Events = new Mongo.Collection('events');
-
+export const Projects = new Mongo.Collection('projects');
 schema = new SimpleSchema({
-    label: {
+    name: {
         type: String
-    },
-    times: {
-        type: [Object]
-    },
-    "times.$.color" : {
-        type: String
-    },
-    "times.$.label" :{
-        type: String
-    },
-    "times.$.starting_time":{
-        type: Number
-    },
-    "times.$.ending_time":{
-        type: Number
-    },
-/*
+    },  
+    canAccess: {
+        type: [String],
+        optional: true,
+        autoform : {
+            types: 'tags'
+        }
+    },  
     createdBy: {
         type: String,
         autoValue: function(){ return this.userId },
@@ -29,28 +19,29 @@ schema = new SimpleSchema({
             type: "hidden"
         }
     }
-    */
 });
-Events.attachSchema(schema);
 
-Events.allow({
+Projects.attachSchema(schema);
+
+Projects.allow({
+
     insert: function(userId, doc) {
     // only allow posting if you are logged in
     return !! userId; 
-},
-update: function(userId, doc) {
+}, update: function(userId, doc) {
     // only allow updating if you are logged in
     return !! userId; 
-},
-remove: function(userID, doc) {
+}, remove: function(userID, doc) {
     //only allow deleting if you are owner
     return doc.createdBy === Meteor.userId();
 }
 });
 
-
 if (Meteor.isServer) {
-  Meteor.publish('events', function eventsPublication() {
-    return Events.find();
+  Meteor.publish('projects', function projectsPublication() {
+    return Projects.find();
   });
 }
+
+
+

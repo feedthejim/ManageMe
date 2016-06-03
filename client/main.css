@@ -9,16 +9,6 @@ html, body
 {
 	height: 100%;
 }
-.left-zone
-{
-	border-radius: 25px;
-	background: #FFF;
-	height: auto;
-	height: 95vh;
-	overflow-y: auto;
-	overflow-x: hidden;
-	/*white-space: nowrap;*/
-}
 .bloc .list-group-item
 {
 	padding-top: 40px;
@@ -30,10 +20,6 @@ html, body
 html {
   position: relative;
   min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-
 }
 .footer {
   position: absolute;
@@ -52,4 +38,10 @@ body {
 .nomargin {
 	margin-left: 0 !important;
 	margin-right: 0 !important;
+}
+.well .col{
+   background-color: rgba(66,139,202, 0.6);
+}
+.well{
+   background-color: rgba(245,245,245, 0.45);
 }
