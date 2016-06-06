@@ -1,25 +1,41 @@
-<template name="navbar"><nav class="navbar navbar-inverse navbar-fixed-top">
+<template name="navbar">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">ManageMe</a>
+        <a class="navbar-brand" href="/">ManageMe</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li>
             <a>{{> loginButtons}}</a>
           </li>
-          <li><a href="#">Tableau de bord</a></li>
+          {{#if currentUser}}
+          
+          <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Projets en cours <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">{{> projectList}}
+            </ul>
+          </li>
+          {{#if equals currentUser.username createdBy}}
+          {{> editProjectModal id=projectId}}
+          {{> removeProjectModal id=projectId}}
+          {{/if}}
+          <li><a href="export">Exporter</a></li>
           <li><a href="#">Parametres</a></li>
           <li><a href="#">Profil</a></li>
+          {{/if}}
           <li><a href="#">Support</a></li>
         </ul>
       </div>
     </div>
   </nav>
-  </template>
+</template>
+
+<template name="projectList">
+  {{#each project}}
+  <li><a href='../{{_id}}'>{{name}}</a></li>
+  {{/each}}
+  <li>{{> addProjectModal}}</li>
+</template>

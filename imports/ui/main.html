@@ -22,8 +22,23 @@
 
     {{#afModal title="Ajouter un projet" 
     placeholder=true backdrop=true class="btn btn-primary pull-left" collection="projects" formId="addProjects" operation="insert"}}
+    <span>Ajouter un nouveau projet</span>
+    {{/afModal}}
+</template>
+
+<template name="editProjectModal">
+ {{#afModal title="Editer le projet" 
+    placeholder=true backdrop=true class="btn btn-primary pull-left" collection="projects" formId="editProjects" operation="update" doc=id}}
     <span class="
-    glyphicon glyphicon-plus" 
+    glyphicon glyphicon-pencil" 
+    ></span>
+    {{/afModal}}
+</template>
+
+<template name="removeProjectModal">
+    {{#afModal title="Supprimer le projet" placeholder=true backdrop=true class="btn btn-primary pull-left" formId="removeProjects" collection="projects" operation="remove" doc=id}}
+    <span class="
+    glyphicon glyphicon-remove" 
     ></span>
     {{/afModal}}
 </template>
@@ -53,7 +68,7 @@
 <template name="pleaseLogin">
     <div class="jumbotron">
         <div class="container">
-        <h1>Bienvenue sur ManageMe!</h1>
+            <h1>Bienvenue sur ManageMe!</h1>
             <p>Veuillez vous connectez pour découvrir les fonctionalités!</p>
         </div>
     </div>
@@ -66,15 +81,16 @@
             <div class="list-group bloc undraggable" id={{columnId}}>
                 <a href="#" class="list-group-item active undraggable" style="background-color:{{backgroundColor}}; color:{{fontColor}};">
                     <h2 class="list-group-item-heading undraggable"> 
+
+                        {{#if equals currentUser.username createdBy}}
+                        {{>removeColumnModal id=_id}}
+                        {{>editColumnModal id=_id}}
+                        
+                        {{/if}}
                         {{#if currentUser}}
                         {{#if equals columnId 1}}
                         {{>addNotesModal colId=columnId}}
                         {{/if}}
-                        {{/if}}
-                        {{#if equals currentUser._id createdBy}}
-
-                        {{>editColumnModal id=_id}}
-                        {{>removeColumnModal id=_id}}
                         {{/if}}
                         <center style="color:{{fontColor}};">{{description}}</center>
                     </h2>
@@ -120,9 +136,10 @@
         {{else}} background-color:{{backgroundColor}};
         color:{{fontColor}};{{/if}}">
         <h4 class="list-group-item-heading" style="color:{{fontColor}};">{{description}}
-            {{#if equals currentUser._id createdBy}}
-            {{>editPostModal id=_id}}
+            {{#if equals currentUser.username createdBy}}
             {{>removePostModal id=_id}}
+            {{>editPostModal id=_id}}
+
             {{/if}}
         </h4>
         <p class="list-group-item-text">

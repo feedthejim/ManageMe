@@ -45,3 +45,8 @@ html {
 .well{
    background-color: rgba(245,245,245, 0.45);
 }
+
+#iron-router-progress {
+    background-color :rgb(66,139,202);
+    box-shadow       : 0 0 5px rgb(66,139,202);
+}
