@@ -21,15 +21,15 @@ schema = new SimpleSchema({
 	"times.$.ending_time":{
 		type: Number
 	},
-/*
+
 	createdBy: {
 		type: String,
-		autoValue: function(){ return this.userId },
+		autoValue: function(){ return Meteor.user().username },
 		autoform : {
 			type: "hidden"
 		}
 	}
-	*/
+	
 });
 Events.attachSchema(schema);
 
@@ -44,7 +44,7 @@ update: function(userId, doc) {
 },
 remove: function(userID, doc) {
 	//only allow deleting if you are owner
-	return doc.createdBy === Meteor.userId();
+	return doc.createdBy === Meteor.user().username;
 }
 });
 

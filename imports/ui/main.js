@@ -2,14 +2,24 @@ import { Template } from 'meteor/templating';
 import { Posts } from '../api/Posts.js';
 import { Columns } from '../api/Columns.js';
 import { Events } from '../api/Events.js';
+import { History } from '../api/History.js';
 import { Tracker } from 'meteor/tracker';
 import { Projects } from '../api/Projects.js';
+
 
 import './main.html';
 
 window.posts = Posts; //TODO find workaround to linking col and schema
 window.columns = Columns;
 window.projects = Projects;
+window.events = Events;
+
+
+var windowWidth = new ReactiveVar($(window).width());
+
+window.onresize = function() {
+	windowWidth.set($(window).width());
+}
 
 var eventHandle;
 
@@ -24,7 +34,7 @@ Template.body.onCreated(function bodyOnCreated() {
 	Meteor.subscribe('projects');
 	Meteor.subscribe('posts');
 	Meteor.subscribe('columns');
-
+	Meteor.subscribe('history');
 	eventHandle = Meteor.subscribe('events');
 
 });
@@ -82,13 +92,13 @@ Template.footerCalendar.onRendered(function(){
 				var chart = d3.timeline().stack().margin({left:70, right:30, top:0, bottom:0});
 				var testData = Events.find().fetch();
 				console.log("fected calendar first");
-				var svg = d3.select("#timeline").append("svg").attr("width", 1950).datum(testData).call(chart);
+				var svg = d3.select("#timeline").append("svg").attr("width", windowWidth.get() - 70).datum(testData).call(chart);
 
 				
 				Tracker.autorun(function (){
 					d3.select("#timeline").selectAll("svg").remove()
 					var testData = Events.find().fetch();
-					d3.select("#timeline").append("svg").attr("width", 1950).datum(testData).call(chart);
+					d3.select("#timeline").append("svg").attr("width", windowWidth.get() - 70).datum(testData).call(chart);
 					
 				});
 			}
@@ -128,7 +138,13 @@ Template.mainBoard.onRendered(function(){
 
 function dropListener(el, target, source, sibling){
 	Posts.update(el.id, {$set: {column: parseInt(target.id)}});
-	console.log(target);
+	var fromId = Columns.findOne({ project: source.id});
+	console.log(new Date().toJSON());
+	History.insert({project: Router.current().params.project, postId: el.id, 
+		movedBy: Meteor.user().username, fromCol: source.id, toCol: target.id
+		, createdOn : new Date().toJSON().slice(0,16)})
+	console.log({project: Router.current().params.project, postId: el.id, 
+		movedBy: Meteor.user().username, fromCol: source.id, toCol: target.id});
 };
 
 
@@ -151,7 +167,7 @@ AutoForm.hooks({
 		before: {
 			insert: function(doc){
 
-				doc.columnId = Columns.find().count() + 1;
+				//doc.columnId = Columns.find().count() + 1;
 				console.log(doc);
 				return doc;
 			}
@@ -173,13 +189,22 @@ AutoForm.hooks({
 			} 
 		}
 	},
-	removeProjects : {
-		after: {
-			remove: function(err, result){
-					Posts.remove({project: this.docId});
-					Columns.remove({project: this.docId});
-			}
+	removeProject : {
+
+		onSuccess: function(formType, result){
+			Posts.remove({project: this.docId});
+			Columns.remove({project: this.docId});
 		}
+		
 	}
+	
 });
 
+Template.removeColumnModal.helpers({
+	columnCleanse: function(){
+		return  function(){
+			console.log(this);
+			Posts.remove({$and: [{project: result.project}, {column :result.columnId}]});
+		}
+	},
+});

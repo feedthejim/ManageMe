@@ -2,7 +2,7 @@
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">ManageMe</a>
+        <a class="navbar-brand" href="/">ManageMe : {{projectName}}</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -13,10 +13,19 @@
           
           <li role="presentation" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              Projets en cours <span class="caret"></span>
+              Projets en cours<span class="caret"></span>
             </a>
             <ul class="dropdown-menu">{{> projectList}}
             </ul>
+
+          </li>
+          <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Fil du projet<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">{{> projectHistory}}
+            </ul>
+            
           </li>
           {{#if equals currentUser.username createdBy}}
           {{> editProjectModal id=projectId}}
@@ -38,4 +47,14 @@
   <li><a href='../{{_id}}'>{{name}}</a></li>
   {{/each}}
   <li>{{> addProjectModal}}</li>
+</template>
+
+<template name="projectHistory">
+  <ul class="list-group scroll">
+    <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
+      {{#each projectHistory}}
+      <li class="list-group-item"><b>{{createdOn}}</b> : <b  style="color: #d9534f;">{{movedBy}}</b> a déplacer <h4><span class="label label-default">"{{postContent postId}}"</span></h4> de  <h4><span class="label label-default">"{{colFromContent fromCol}}"</span></h4> à  <h4><span class="label label-default">"{{colFromContent toCol}}"</span></h4></li>
+      {{/each}}
+
+  </ul>
 </template>

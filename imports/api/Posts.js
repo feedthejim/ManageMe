@@ -53,6 +53,24 @@ schema= new SimpleSchema({
 			type: "hidden"
 		}
 	},
+	priority: {
+		type: Number,
+		min: 0,
+		autoform: {
+			defaultValue: 1,
+			type: "select",
+			options: function(){
+				return {
+					0 : "0",
+					1 : "1",
+					2 : "2",
+					3 : "3",
+					4 : "4",
+					5 : "5"
+				};
+			}
+		}
+	},
 	backgroundColor: {
 		type: String,
 		optional: true,
@@ -61,8 +79,11 @@ schema= new SimpleSchema({
 			type: "select-radio",
 			options: function() {
 				return [{
+					label: "Bleue",
+					value: "#5bc0de"
+				}, {
 					label: "Vert",
-					value: "#00FF00"
+					value: "#5cb85c"
 				}, {
 					label: "Orange",
 					value: "#FF8000"

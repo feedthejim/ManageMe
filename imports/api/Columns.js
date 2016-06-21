@@ -18,12 +18,10 @@ schema = new SimpleSchema({
 		type: Number,
 		label: "Column",
 		autoform: {
-			type: 'select',
-			options: function(){
-				var object = [];
-				for (var i = 1; i < 10; i++)
-					object[i] = { label : i, value: i};
-				return object;
+			type: "hidden",
+			defaultValue: function(){
+				console.log(columns.find({project: Router.current().params.project}).count()) + 1;
+				return columns.find({project: Router.current().params.project}).count() + 1;
 			}
 		}
 	},
@@ -90,7 +88,7 @@ update: function(userId, doc) {
 },
 remove: function(userID, doc) {
 	//only allow deleting if you are owner
-	return doc.createdBy === Meteor.userId();
+	return doc.createdBy === Meteor.user().username;
 }
 });
 

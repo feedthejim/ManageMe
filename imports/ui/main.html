@@ -28,15 +28,15 @@
 
 <template name="editProjectModal">
  {{#afModal title="Editer le projet" 
-    placeholder=true backdrop=true class="btn btn-primary pull-left" collection="projects" formId="editProjects" operation="update" doc=id}}
-    <span class="
-    glyphicon glyphicon-pencil" 
-    ></span>
-    {{/afModal}}
+ placeholder=true backdrop=true class="btn btn-primary pull-left" collection="projects" formId="editProjects" operation="update" doc=id}}
+ <span class="
+ glyphicon glyphicon-pencil" 
+ ></span>
+ {{/afModal}}
 </template>
 
 <template name="removeProjectModal">
-    {{#afModal title="Supprimer le projet" placeholder=true backdrop=true class="btn btn-primary pull-left" formId="removeProjects" collection="projects" operation="remove" doc=id}}
+    {{#afModal title="Supprimer le projet" placeholder=true backdrop=true class="btn btn-primary pull-left" formId="removeProject" collection="projects" operation="remove" doc=id}}
     <span class="
     glyphicon glyphicon-remove" 
     ></span>
@@ -63,6 +63,31 @@
             </div>
         </div>
     </footer>
+</template>
+
+<template name="addEventModal">
+    {{#afModal title="Ajouter un evenement" 
+    placeholder=true backdrop=true class="btn btn-primary pull-right" collection="events" formId="addEvent" operation="insert" value=defaultValues}}
+    <span class="
+    glyphicon glyphicon-plus" 
+    ></span>
+    {{/afModal}}
+</template>
+
+<template name="removeEventModal">
+    {{#afModal title="Supprimer l'evenement" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="events" operation="remove" doc=id}}
+    <span class="
+    glyphicon glyphicon-remove" 
+    ></span>
+    {{/afModal}}
+</template>
+
+<template name = "editEventModal">
+    {{#afModal title="Editer l'evenement" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="events" operation="update" doc=id}}
+    <span class="
+    glyphicon glyphicon-pencil" 
+    ></span>
+    {{/afModal}}
 </template>
 
 <template name="pleaseLogin">
@@ -94,7 +119,7 @@
                         {{/if}}
                         <center style="color:{{fontColor}};">{{description}}</center>
                     </h2>
-                    <p class="list-group-item-text" style="color:{{fontColor}};">{{details}} id:{{columnId}} //to remove
+                    <p class="list-group-item-text" style="color:{{fontColor}};">{{details}}
                     </p>
                 </a>
                 {{>postit col=columnId row=../rowId}}
@@ -135,20 +160,24 @@
         color: "#000";
         {{else}} background-color:{{backgroundColor}};
         color:{{fontColor}};{{/if}}">
-        <h4 class="list-group-item-heading" style="color:{{fontColor}};">{{description}}
+
+        <h4 class="list-group-item-heading" style="color:{{fontColor}};"> <b>{{description}}</b>
             {{#if equals currentUser.username createdBy}}
             {{>removePostModal id=_id}}
-            {{>editPostModal id=_id}}
-
             {{/if}}
+            {{>editPostModal id=_id}}
         </h4>
         <p class="list-group-item-text">
+            <h1><span class="label label-danger pull-right">{{priority}}</span></h1>
             <h4>
                 <div style="color:{{fontColor}};">{{details}}</div>
+
                 {{#each tag in tags}}
                 <span class="label label-default">{{tag}}</span>
                 {{/each}}
+                
             </h4>
+            
         </p>
 
     </a>
@@ -173,7 +202,7 @@
 </template>
 
 <template name="removeColumnModal">
-    {{#afModal title="Supprimer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="columns" operation="remove" doc=id}}
+    {{#afModal title="Supprimer la colonne" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" onSuccess=columnCleanse collection="columns" operation="remove" doc=id}}
     <span class="
     glyphicon glyphicon-remove" 
     ></span>
@@ -187,4 +216,6 @@
     ></span>
     {{/afModal}}
 </template>
+
+
 
