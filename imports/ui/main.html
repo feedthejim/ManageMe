@@ -15,7 +15,6 @@
             {{>showRow id=_id}}
         </div>
     </div>
-    {{>footerCalendar}}
 </template>
 
 <template name="addProjectModal">
@@ -168,12 +167,12 @@
             {{>editPostModal id=_id}}
         </h4>
         <p class="list-group-item-text">
-            <h1><span class="label label-danger pull-right">{{priority}}</span></h1>
+            <h1><span class="label {{priorityColor priority}} pull-right">{{priority}}</span></h1>
             <h4>
                 <div style="color:{{fontColor}};">{{details}}</div>
 
                 {{#each tag in tags}}
-                <span class="label label-default">{{tag}}</span>
+                <span class="label {{labelColor}}">{{tag}}</span>
                 {{/each}}
                 
             </h4>

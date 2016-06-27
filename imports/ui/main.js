@@ -62,9 +62,16 @@ Template.registerHelper('not',
 Template.postit.helpers({
 	posts(col, row) {
 		console.log('looking for col:' + col +' row: '+ row);
-		return Posts.find({$and: [{column: col}, {project: row}]});
+		return Posts.find({$and: [{column: col}, {project: row}]}, {sort: { priority : -1 }});
+	},
+	labelColor(){
+		labelArray = ["label-primary","label-success","label-info","label-warning","label-danger"];
+		return labelArray[Math.floor(Math.random() * labelArray.length)];
+	},
+	priorityColor(order){
+		labelArray = ["label-default", "label-info","label-primary","label-success","label-warning","label-danger"];
+		return labelArray[order];
 	}
-
 });
 
 Template.showColumn.helpers({
