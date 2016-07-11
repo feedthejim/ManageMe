@@ -17,7 +17,6 @@ standard-minifier-js    # JS minifier run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
-autopublish             # Publish all data to the clients (for prototyping)
 twbs:bootstrap
 ahref:dragula
 yogiben:autoform-modals
@@ -30,3 +29,11 @@ accounts-password
 ian:accounts-ui-bootstrap-3
 d3js:d3
 clubfest:raphael
+iron:router
+reactive-dict
+multiply:iron-router-progress
+nicolaslopezj:excel-export
+check
+session
+appcache
+arkham:comments-ui
