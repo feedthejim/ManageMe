@@ -153,13 +153,13 @@
 <template name="postit">
     <div class="bloc" id={{[col]}}>
         {{#each (posts col row)}}
-        <a href="#" class="list-group-item" id={{_id}} style="
+        <div class="list-group-item" id={{_id}} style="
         {{#if not isColor backgroundColor}}
         background: {{backgroundColor}};
         color: "#000";
         {{else}} background-color:{{backgroundColor}};
         color:{{fontColor}};{{/if}}">
-
+        
         <h4 class="list-group-item-heading" style="color:{{fontColor}};"> <b>{{description}}</b>
             {{#if equals currentUser.username createdBy}}
             {{>removePostModal id=_id}}
@@ -178,8 +178,11 @@
             </h4>
             
         </p>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".collapse#{{_id}}" aria-expanded="false" aria-controls="collapseExample">
+Afficher les commentaires</button>
+        <div class="collapse undraggable well" id="{{_id}}">{{> commentsBox id=_id}}</div>
 
-    </a>
+    </div>
     {{/each}}
 </div>
 </template>

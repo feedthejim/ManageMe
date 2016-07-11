@@ -46,6 +46,10 @@ html {
  background-color: rgba(245,245,245, 0.45);
 }
 
+.collapse.well{
+ background-color: rgba(245,245,245, 1.0);
+}
+
 #iron-router-progress {
   background-color :rgb(66,139,202);
   box-shadow       : 0 0 5px rgb(66,139,202);
