@@ -21,6 +21,19 @@
           </li>
           <li role="presentation" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Afficher<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
+              <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
+              <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
+              <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
+              <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
+            </ul>
+            
+          </li>
+          <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               Fil du projet<span class="caret"></span>
             </a>
             <ul class="dropdown-menu">{{> projectHistory}}
@@ -52,9 +65,9 @@
 <template name="projectHistory">
   <ul class="list-group scroll">
     <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
-      {{#each projectHistory}}
-      <li class="list-group-item"><b>{{createdOn}}</b> : <b  style="color: #d9534f;">{{movedBy}}</b> a déplacer <h4><span class="label label-default">"{{postContent postId}}"</span></h4> de  <h4><span class="label label-default">"{{colFromContent fromCol}}"</span></h4> à  <h4><span class="label label-default">"{{colFromContent toCol}}"</span></h4></li>
-      {{/each}}
+    {{#each projectHistory}}
+    <li class="list-group-item"><b>{{createdOn}}</b> : <b  style="color: #d9534f;">{{movedBy}}</b> a déplacer <h4><span class="label label-default">"{{postContent postId}}"</span></h4> de  <h4><span class="label label-default">"{{colFromContent fromCol}}"</span></h4> à  <h4><span class="label label-default">"{{colFromContent toCol}}"</span></h4></li>
+    {{/each}}
 
   </ul>
 </template>

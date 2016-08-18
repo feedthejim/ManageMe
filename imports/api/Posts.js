@@ -1,4 +1,4 @@
-import { Mongo } from 'meteor/mongo';
+	
 import { Columns } from './Columns.js';
 import { Projects } from './Projects.js';
 
@@ -15,6 +15,23 @@ schema= new SimpleSchema({
 			type: "hidden",
 			defaultValue: function(){
 				return Router.current().params.project;
+			}
+		}
+	},
+
+	visibility: {
+		type: Number,
+		autoform: {
+			type: "select",
+			options: function(){
+				return {
+					0 : "0",
+					1 : "1",
+					2 : "2",
+					3 : "3",
+					4 : "4",
+					5 : "5"
+				};
 			}
 		}
 	},
