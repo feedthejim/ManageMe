@@ -2,7 +2,7 @@
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">ManageMe : {{projectName}}</a>
+        <a class="navbar-brand" href="/">ManageMe (QRQC ed.) : {{projectName}}</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -10,7 +10,7 @@
             <a>{{> loginButtons}}</a>
           </li>
           {{#if currentUser}}
-          
+
           <li role="presentation" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               Projets en cours<span class="caret"></span>
@@ -24,13 +24,13 @@
               Afficher<span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
-              <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
-              <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
-              <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
-              <li class="list-group-item btn btn-default" type="button" id="flushHistory">Vider l'historique</li>
+              <li class="list-group-item btn btn-default show0" type="button" > Type 0</li>
+              <li class="list-group-item btn btn-default show1" type="button" > Type 1</li>
+              <li class="list-group-item btn btn-default show2" type="button" > Type 2</li>
+              <li class="list-group-item btn btn-default show3" type="button"> Type 3</li>
+              <li class="list-group-item btn btn-default show4" type="button" > Type 4</li>
             </ul>
-            
+
           </li>
           <li role="presentation" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -38,7 +38,7 @@
             </a>
             <ul class="dropdown-menu">{{> projectHistory}}
             </ul>
-            
+
           </li>
           {{#if equals currentUser.username createdBy}}
           {{> editProjectModal id=projectId}}

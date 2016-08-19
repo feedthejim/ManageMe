@@ -1,7 +1,7 @@
-    
+
 <body >
     {{>navbar}}
-    
+
     {{>autoformModals}}
 </body>
 
@@ -19,17 +19,17 @@
 
 <template name="addProjectModal">
 
-    {{#afModal title="Ajouter un projet" 
+    {{#afModal title="Ajouter un projet"
     placeholder=true backdrop=true class="btn btn-primary pull-left" collection="projects" formId="addProjects" operation="insert"}}
     <span>Ajouter un nouveau projet</span>
     {{/afModal}}
 </template>
 
 <template name="editProjectModal">
- {{#afModal title="Editer le projet" 
+ {{#afModal title="Editer le projet"
  placeholder=true backdrop=true class="btn btn-primary pull-left" collection="projects" formId="editProjects" operation="update" doc=id}}
  <span class="
- glyphicon glyphicon-pencil" 
+ glyphicon glyphicon-pencil"
  ></span>
  {{/afModal}}
 </template>
@@ -37,7 +37,7 @@
 <template name="removeProjectModal">
     {{#afModal title="Supprimer le projet" placeholder=true backdrop=true class="btn btn-primary pull-left" formId="removeProject" collection="projects" operation="remove" doc=id}}
     <span class="
-    glyphicon glyphicon-remove" 
+    glyphicon glyphicon-remove"
     ></span>
     {{/afModal}}
 </template>
@@ -65,10 +65,10 @@
 </template>
 
 <template name="addEventModal">
-    {{#afModal title="Ajouter un evenement" 
+    {{#afModal title="Ajouter un evenement"
     placeholder=true backdrop=true class="btn btn-primary pull-right" collection="events" formId="addEvent" operation="insert" value=defaultValues}}
     <span class="
-    glyphicon glyphicon-plus" 
+    glyphicon glyphicon-plus"
     ></span>
     {{/afModal}}
 </template>
@@ -76,7 +76,7 @@
 <template name="removeEventModal">
     {{#afModal title="Supprimer l'evenement" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="events" operation="remove" doc=id}}
     <span class="
-    glyphicon glyphicon-remove" 
+    glyphicon glyphicon-remove"
     ></span>
     {{/afModal}}
 </template>
@@ -84,7 +84,7 @@
 <template name = "editEventModal">
     {{#afModal title="Editer l'evenement" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="events" operation="update" doc=id}}
     <span class="
-    glyphicon glyphicon-pencil" 
+    glyphicon glyphicon-pencil"
     ></span>
     {{/afModal}}
 </template>
@@ -104,12 +104,12 @@
         <div class="well col">
             <div class="list-group bloc undraggable" id={{columnId}}>
                 <a href="#" class="list-group-item active undraggable" style="background-color:{{backgroundColor}}; color:{{fontColor}};">
-                    <h2 class="list-group-item-heading undraggable"> 
+                    <h2 class="list-group-item-heading undraggable">
 
                         {{#if equals currentUser.username createdBy}}
                         {{>removeColumnModal id=_id}}
                         {{>editColumnModal id=_id}}
-                        
+
                         {{/if}}
                         {{#if currentUser}}
                         {{#if equals columnId 1}}
@@ -130,20 +130,20 @@
 
 <template name="addColumnModal">
 
-    {{#afModal title="Ajouter une colonne" 
+    {{#afModal title="Ajouter une colonne"
     placeholder=true backdrop=true class="btn btn-primary pull-left" collection="columns" formId="addColumns" operation="insert" value=defaultValues}}
     <span class="
-    glyphicon glyphicon-plus" 
+    glyphicon glyphicon-plus"
     ></span>
     {{/afModal}}
 
 </template>
 
 <template name="addNotesModal">
-    {{#afModal title="Ajouter une note" 
+    {{#afModal title="Ajouter une note"
     placeholder=true backdrop=true class="btn btn-primary pull-right" formId="addNotes" collection="posts" operation="insert"}}
     <span class="
-    glyphicon glyphicon-plus" 
+    glyphicon glyphicon-plus"
     ></span>
     {{/afModal}}
 
@@ -158,24 +158,29 @@
         background: {{backgroundColor}};
         color: "#000";
         {{else}} background-color:{{backgroundColor}};
-        color:{{fontColor}};{{/if}}"> 
-        <h4 class="list-group-item-heading" style="color:{{fontColor}};"> <b>{{description}}</b>
+        color:{{fontColor}};{{/if}}">
+          <h5 class="list-group-item-heading" style="color:{{fontColor}};">
+	    <u><b>{{description}}</b></u>
             {{#if equals currentUser.username createdBy}}
             {{>removePostModal id=_id}}
             {{/if}}
             {{>editPostModal id=_id}}
-        </h4>
-        <p class="list-group-item-text">
-            <h1><span class="label {{priorityColor priority}} pull-right">{{priority}}</span></h1>
+          </h5>
+	  <h5 style="color:{{fontColor}};">PROJET : placeholder()</h5>
+	  <h5 style="color:{{fontColor}};">Date de création! placeholder()</h5>
+          <p class="list-group-item-text">
+            <h2><span class="label {{priorityColor priority}} pull-right">{{priority}}</span></h2>
             <h4>
-                <div style="color:{{fontColor}};">{{details}}</div>
+                <div style="color:{{fontColor}};">Notes: {{details}}</div>
                 {{#each tag in tags}}
                 <span class="label {{labelColor}}">{{tag}}</span>
                 {{/each}}
             </h4>
         </p>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".collapse#{{_id}}" aria-expanded="false" aria-controls="collapseExample">
-Afficher les commentaires</button>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".collapse#{{_id}}" aria-expanded="false" aria-controls="collapseExample"><span class="
+    glyphicon glyphicon-comment"
+    ></span>
+</button>
         <div class="collapse undraggable well" id="{{_id}}">{{> commentsBox id=_id}}</div>
     </div>
 
@@ -186,7 +191,7 @@ Afficher les commentaires</button>
 <template name="removePostModal">
     {{#afModal title="Supprimer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="posts" operation="remove" doc=id}}
     <span class="
-    glyphicon glyphicon-remove" 
+    glyphicon glyphicon-remove"
     ></span>
     {{/afModal}}
 
@@ -194,7 +199,7 @@ Afficher les commentaires</button>
 <template name = "editPostModal">
     {{#afModal title="Editer la note" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="posts" operation="update" doc=id}}
     <span class="
-    glyphicon glyphicon-pencil" 
+    glyphicon glyphicon-pencil"
     ></span>
     {{/afModal}}
 </template>
@@ -202,7 +207,7 @@ Afficher les commentaires</button>
 <template name="removeColumnModal">
     {{#afModal title="Supprimer la colonne" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" onSuccess=columnCleanse collection="columns" operation="remove" doc=id}}
     <span class="
-    glyphicon glyphicon-remove" 
+    glyphicon glyphicon-remove"
     ></span>
     {{/afModal}}
 
@@ -210,10 +215,7 @@ Afficher les commentaires</button>
 <template name = "editColumnModal">
     {{#afModal title="Editer la colonne" placeholder=true backdrop=true class="btn btn-primary pull-right dropdown-toggle" collection="columns" operation="update" doc=id}}
     <span class="
-    glyphicon glyphicon-pencil" 
+    glyphicon glyphicon-pencil"
     ></span>
     {{/afModal}}
 </template>
-
-
-

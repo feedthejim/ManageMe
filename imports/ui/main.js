@@ -4,14 +4,13 @@ import { Columns } from '../api/Columns.js';
 import { History } from '../api/History.js';
 import { Tracker } from 'meteor/tracker';
 import { Projects } from '../api/Projects.js';
-
+import { Files } from '../api/Files.js';
 
 import './main.html';
 
 window.posts = Posts; //TODO find workaround to linking col and schema
 window.columns = Columns;
 window.projects = Projects;
-
 
 var windowWidth = new ReactiveVar($(window).width());
 
@@ -33,6 +32,7 @@ Template.body.onCreated(function bodyOnCreated() {
 	Meteor.subscribe('posts');
 	Meteor.subscribe('columns');
 	Meteor.subscribe('history');
+    Meteor.subscribe('files');
 	eventHandle = Meteor.subscribe('events');
 
 });
@@ -59,8 +59,9 @@ Template.registerHelper('not',
 
 Template.postit.helpers({
 	posts(col, row) {
-		console.log('looking for col:' + col +' row: '+ row);
-		return Posts.find({$and: [{column: col}, {project: row}]}, {sort: { priority : -1 }});
+	    var priorityLevel = Session.get("displayLevel");
+	    console.log('looking for col:' + col +' row: '+ row + 'visibility: ' + priorityLevel);
+	    return Posts.find({$and: [{column: col}, {project: row}, {visibility : {$lte : priorityLevel}}]}, {sort: { priority : -1 }});
 	},
 	labelColor(){
 		labelArray = ["label-primary","label-success","label-info","label-warning","label-danger"];
@@ -84,7 +85,7 @@ Template.showRow.helpers({
 	rows() {
 		var user = Meteor.user().username;
 		console.log(Projects.find({$or: [{canAccess: user}, {createdBy: user}]}));
-		return Projects.find({$or: [{canAccess: user}, {createdBy: user}]});  
+		return Projects.find({$or: [{canAccess: user}, {createdBy: user}]});
 	}
 })
 
@@ -123,10 +124,10 @@ function dropListener(el, target, source, sibling){
 	Posts.update(el.id, {$set: {column: parseInt(target.id)}});
 	var fromId = Columns.findOne({ project: source.id});
 	console.log(new Date().toJSON());
-	History.insert({project: Router.current().params.project, postId: el.id, 
+	History.insert({project: Router.current().params.project, postId: el.id,
 		movedBy: Meteor.user().username, fromCol: source.id, toCol: target.id
 		, createdOn : new Date().toJSON().slice(0,16)})
-	console.log({project: Router.current().params.project, postId: el.id, 
+	console.log({project: Router.current().params.project, postId: el.id,
 		movedBy: Meteor.user().username, fromCol: source.id, toCol: target.id});
 };
 
@@ -169,7 +170,7 @@ AutoForm.hooks({
 				details: 'Groupe de stories', fontColor:'#FFFFFF', backgroundColor: '#FF8000', columnId : 1,createdBy: Meteor.user().username };
 
 				Columns.insert(tmp);
-			} 
+			}
 		}
 	},
 	removeProject : {
@@ -178,9 +179,9 @@ AutoForm.hooks({
 			Posts.remove({project: this.docId});
 			Columns.remove({project: this.docId});
 		}
-		
+
 	}
-	
+
 });
 
 Template.removeColumnModal.helpers({
