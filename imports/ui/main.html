@@ -26,12 +26,12 @@
 </template>
 
 <template name="editProjectModal">
- {{#afModal title="Editer le projet"
- placeholder=true backdrop=true class="btn btn-primary pull-left" collection="projects" formId="editProjects" operation="update" doc=id}}
- <span class="
- glyphicon glyphicon-pencil"
- ></span>
- {{/afModal}}
+   {{#afModal title="Editer le projet"
+   placeholder=true backdrop=true class="btn btn-primary pull-left" collection="projects" formId="editProjects" operation="update" doc=id}}
+   <span class="
+   glyphicon glyphicon-pencil"
+   ></span>
+   {{/afModal}}
 </template>
 
 <template name="removeProjectModal">
@@ -159,32 +159,33 @@
         color: "#000";
         {{else}} background-color:{{backgroundColor}};
         color:{{fontColor}};{{/if}}">
-          <h5 class="list-group-item-heading" style="color:{{fontColor}};">
-	    <u><b>{{description}}</b></u>
-            {{#if equals currentUser.username createdBy}}
-            {{>removePostModal id=_id}}
-            {{/if}}
-            {{>editPostModal id=_id}}
-          </h5>
-	  <h5 style="color:{{fontColor}};">PROJET : placeholder()</h5>
-	  <h5 style="color:{{fontColor}};">Date de création! placeholder()</h5>
-          <p class="list-group-item-text">
-            <h2><span class="label {{priorityColor priority}} pull-right">{{priority}}</span></h2>
-            <h4>
-                <div style="color:{{fontColor}};">Notes: {{details}}</div>
-                {{#each tag in tags}}
-                <span class="label {{labelColor}}">{{tag}}</span>
-                {{/each}}
-            </h4>
-        </p>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".collapse#{{_id}}" aria-expanded="false" aria-controls="collapseExample"><span class="
-    glyphicon glyphicon-comment"
-    ></span>
-</button>
-        <div class="collapse undraggable well" id="{{_id}}">{{> commentsBox id=_id}}</div>
-    </div>
+        <h5 class="list-group-item-heading" style="color:{{fontColor}};">
+           <u><b>{{description}}</b></u>
+           {{#if equals currentUser.username createdBy}}
+           {{>removePostModal id=_id}}
+           {{/if}}
+           {{>editPostModal id=_id}}
+       </h5>
+       <h5 style="color:{{fontColor}};">Programme : placeholder()</h5>
+       <h5 style="color:{{fontColor}};">Equipement : placeholder()</h5>
+       <h5 style="color:{{fontColor}};">Date de création! placeholder()</h5>
+       <p class="list-group-item-text">
+        <h2><span class="label {{priorityColor priority}} pull-right">{{priority}}</span></h2>
+        <h4>
+            <div style="color:{{fontColor}};">Notes: {{details}}</div>
+            {{#each tag in tags}}
+            <span class="label {{labelColor}}">{{tag}}</span>
+            {{/each}}
+        </h4>
+    </p>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".collapse#{{_id}}" aria-expanded="false" aria-controls="collapseExample"><span class="
+        glyphicon glyphicon-comment"
+        ></span>
+    </button>
+    <div class="collapse undraggable well" id="{{_id}}">{{> commentsBox id=_id}}</div>
+</div>
 
-    {{/each}}
+{{/each}}
 </div>
 </template>
 
